@@ -1,82 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My p5.js Sketch</title>
-    <script <iframe src="https://editor.p5js.org/Evana/full/8VdDYSn3a"></iframe>></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Sketch</title>
+    <!-- Include p5.js library -->
+    <script src="https://editor.p5js.org/Evana/full/8VdDYSn3a"></script>
 </head>
 <body>
-    <h1>My p5.js Sketch</h1>
-    <p>Here's my amazing p5.js sketch:</p>
-    
-    <!-- Create a canvas element for your p5.js sketch -->
-    <div id="p5js-container">
-        <!-- Include your p5.js code directly within this <script> block -->
-        <script>
-            let xoff1=0 //x- axis
-let xoff2=1000// y -axis
-
-
-let particles = [];
-
-const num = 1500; //no of particals
-
-const noiseScale = 0.01; // for scaling down the noise
-
-function preload(){
-    song = loadSound('assets/Grass.mp3');
-   img = loadImage('assets/Tor.png');
-  
-}
-            function setup() {
-                 createCanvas(600, 600);
-  song.play();
-  for(let i = 0; i < num; i ++) {
-    particles.push(createVector(random(width), random(height)));//position of the particals
-   
-  }  
- 
- noStroke();
-   
-            }
-
-            function draw() {
-                background(0, 10);
-  var n1=map(noise(xoff1),0,1,0,width)
-  var n2=map(noise(xoff2),0,1,0,height)
-  xoff1+=0.0012 //basically controlls speed kindof
-  xoff2+=0.0012
-  
-  image(img, n1,n2,210,160);
- translate(0, height );
-
- for(let i = 0; i < num; i ++) {
-    let p = particles[i];
- ellipse(p.x,-p.y,6,2);// shape to the particals
-     fill('green');
-  ellipse(p.x+10,-p.y+10,2,6);
-    fill('lightgreen');
-    let n = noise(p.x * noiseScale, p.y * noiseScale, frameCount * noiseScale);// zooming in on the noise
-    let a = PI * n;//mapping between  0 to .5
-    p.x += cos(a);// converting the angles into co-ordinates
-    p.y += sin(a);
-    if(!onScreen(p)) {
-      p.x = random(width);// if not on screen the partical gets a new random position
-     p.y = random(height);
-    }
-  }
-                function mouseReleased() {//change the noise values
-  noiseSeed(second());
-}
-
-
-function onScreen(v) {
-  return v.x >= 0 && v.x <= width && v.y >= 0 && v.y <= height; //tells if the partical is on the screen or not
-}
-
-
-            }
-        </script>
-    </div>
+    <header>
+        <h1>My p5.js Sketch</h1>
+    </header>
+    <main>
+        <!-- Embed the p5.js sketch from the provided link -->
+        <iframe src="https://editor.p5js.org/Evana/full/8VdDYSn3a" style="width: 100%; height: 500px; border: none;"></iframe>
+    </main>
 </body>
 </html>
 
