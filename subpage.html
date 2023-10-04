@@ -9,20 +9,75 @@
     <p>Here's my amazing p5.js sketch:</p>
     
     <!-- Create a canvas element for your p5.js sketch -->
-    <canvas id="p5js-canvas"></canvas>
-    
-    <!-- Include your p5.js code -->
-    <script>
-        function setup() {
-            let canvas = createCanvas(400, 400);
-            canvas.parent("p5js-canvas");
-        }
+    <div id="p5js-container">
+        <!-- Include your p5.js code directly within this <script> block -->
+        <script>
+            let xoff1=0 //x- axis
+let xoff2=1000// y -axis
 
-        function draw() {
-            background(220);
-            ellipse(width / 2, height / 2, 50, 50);
-        }
-    </script>
+
+let particles = [];
+
+const num = 1500; //no of particals
+
+const noiseScale = 0.01; // for scaling down the noise
+
+function preload(){
+    song = loadSound('assets/Grass.mp3');
+   img = loadImage('assets/Tor.png');
+  
+}
+            function setup() {
+                 createCanvas(600, 600);
+  song.play();
+  for(let i = 0; i < num; i ++) {
+    particles.push(createVector(random(width), random(height)));//position of the particals
+   
+  }  
+ 
+ noStroke();
+   
+            }
+
+            function draw() {
+                background(0, 10);
+  var n1=map(noise(xoff1),0,1,0,width)
+  var n2=map(noise(xoff2),0,1,0,height)
+  xoff1+=0.0012 //basically controlls speed kindof
+  xoff2+=0.0012
+  
+  image(img, n1,n2,210,160);
+ translate(0, height );
+
+ for(let i = 0; i < num; i ++) {
+    let p = particles[i];
+ ellipse(p.x,-p.y,6,2);// shape to the particals
+     fill('green');
+  ellipse(p.x+10,-p.y+10,2,6);
+    fill('lightgreen');
+    let n = noise(p.x * noiseScale, p.y * noiseScale, frameCount * noiseScale);// zooming in on the noise
+    let a = PI * n;//mapping between  0 to .5
+    p.x += cos(a);// converting the angles into co-ordinates
+    p.y += sin(a);
+    if(!onScreen(p)) {
+      p.x = random(width);// if not on screen the partical gets a new random position
+     p.y = random(height);
+    }
+  }
+                function mouseReleased() {//change the noise values
+  noiseSeed(second());
+}
+
+
+function onScreen(v) {
+  return v.x >= 0 && v.x <= width && v.y >= 0 && v.y <= height; //tells if the partical is on the screen or not
+}
+
+
+            }
+        </script>
+    </div>
 </body>
 </html>
+
 
